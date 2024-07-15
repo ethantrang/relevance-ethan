@@ -1,7 +1,7 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from langchain_community.vectorstores.mongodb_atlas import MongoDBAtlasVectorSearch
-from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_core.documents.base import Document
 
 from openai import OpenAI
@@ -9,15 +9,19 @@ from openai import OpenAI
 from typing import List
 import os 
 from dotenv import load_dotenv
+
+import sys
+sys.path.append("./")
+from loader.loader_client import loader_client
 load_dotenv()
 
 """
+    Useful resources:
     https://www.mongodb.com/docs/atlas/atlas-vector-search/tutorials/reciprocal-rank-fusion/
-
-    PyMongo documentation: https://www.mongodb.com/docs/languages/python/pymongo-driver/current/   
+    https://www.mongodb.com/docs/languages/python/pymongo-driver/current/   
 """
 
-# TODO: want to use claude rerank 
+# TODO: using claude rerank 
 
 class StorageClient: 
 
@@ -37,7 +41,10 @@ class StorageClient:
     def delete_index(self):
         pass
 
-    def store_documents(self, docs: List[Document]):
+    def store_documents(self, data: bytes, item_id: str):
+
+        docs: List[Document] = loader_client.get_docs_from_pdf(data, item_id)
+
         docsearch = MongoDBAtlasVectorSearch.from_documents(
             documents=docs,
             embedding=self.embeddings,
@@ -142,7 +149,7 @@ if __name__=="__main__":
 
     # print(embedding)
 
-    results = storage_client.retrieve_with_hybrid_search(query, "nrma-car-pds-1023-east")
-    # results = storage_client.delete_documents("nrma-car-pds-1023-east")
+    # results = storage_client.retrieve_with_hybrid_search(query, "nrma-car-pds-1023-east")
+    results = storage_client.delete_documents("nrma-car-pds-1023-east")
 
     print(results)
