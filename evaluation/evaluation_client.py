@@ -43,7 +43,7 @@ class EvaluationClient:
             with open(data_path, 'wb') as file:
                 file.write(data)
 
-            loader = PyPDFLoader("/Users/ethantrang/Documents/relevance-ethan/loader/data/POL011BA.pdf") 
+            loader = PyPDFLoader(data_path) 
             documents = loader.load()
 
             for document in documents:
@@ -217,6 +217,6 @@ class EvaluationClient:
 evaluation_client = EvaluationClient()
 
 if __name__ == "__main__":
-    data = open("/Users/ethantrang/Documents/relevance-ethan/evaluation/tests/testset_nrma-car-pds-1023-east.csv", "rb").read()
+    data = open("evaluation/tests/testset_nrma-car-pds-1023-east.csv", "rb").read()
     results = evaluation_client.evaluate_all(data, "nrma-car-pds-1023-east")
     print(results)
