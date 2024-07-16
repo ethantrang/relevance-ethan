@@ -41,7 +41,7 @@ class LoaderClient:
                 curr_page_content = doc.page_content    
         return new_docs
     
-    def get_docs_from_pdf(self, data: bytes, item_id: str) -> list:
+    def get_docs_from_pdf(self, data: bytes, item_id: str) -> List:
         output_path = self.decode_bytes_to_pdf(data)
         loader = PyPDFLoader(output_path)
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=self.chunk_size, chunk_overlap=self.chunk_overlap)

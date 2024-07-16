@@ -1,5 +1,4 @@
 from fastapi import FastAPI, File, UploadFile
-from utils.template import *
 import uvicorn
 
 import sys
@@ -7,7 +6,6 @@ sys.path.append("/")
 from models.llm_client import llm_client
 from evaluation.evaluation_client import evaluation_client
 from storage.storage_client import storage_client
-from loader.loader_client import loader_client
 from fastapi.responses import StreamingResponse
 
 app = FastAPI()

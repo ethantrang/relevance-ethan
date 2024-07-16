@@ -1,3 +1,12 @@
+from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader
+from langchain_openai import ChatOpenAI
+from langchain_community.embeddings import OpenAIEmbeddings
+
+from ragas.testset.generator import TestsetGenerator
+from ragas.testset.evolutions import simple, reasoning, multi_context
+from ragas.metrics import answer_relevancy, faithfulness, context_recall, context_precision
+from ragas import evaluate
+
 import io
 import os
 import sys
@@ -6,14 +15,6 @@ import ast
 from datasets import Dataset
 import pandas as pd
 from dotenv import load_dotenv
-from fastapi.responses import StreamingResponse
-from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader
-from langchain_openai import ChatOpenAI
-from langchain_community.embeddings import OpenAIEmbeddings
-from ragas.testset.generator import TestsetGenerator
-from ragas.testset.evolutions import simple, reasoning, multi_context
-from ragas.metrics import answer_relevancy, faithfulness, context_recall, context_precision
-from ragas import evaluate
 
 load_dotenv()
 
@@ -192,6 +193,7 @@ class EvaluationClient:
                 full_testset_path = self._generate_answers_and_texts(
                     item_id=item_id,
                     testset_path=testset_path,
+                    testset_id=index,
                     retrieval_method=test["retrieval_method"],
                     generation_method=test["generation_method"],
                 )
@@ -215,7 +217,6 @@ class EvaluationClient:
 evaluation_client = EvaluationClient()
 
 if __name__ == "__main__":
-    data = open("/Users/ethantrang/Documents/relevance-ethan/evaluation/tests/testset_POL011BA.csv", "rb").read()
-    results = evaluation_client.evaluate_one(data, "vector", "openai", "POL011BA")
+    data = open("/Users/ethantrang/Documents/relevance-ethan/evaluation/tests/testset_nrma-car-pds-1023-east.csv", "rb").read()
+    results = evaluation_client.evaluate_all(data, "nrma-car-pds-1023-east")
     print(results)
-

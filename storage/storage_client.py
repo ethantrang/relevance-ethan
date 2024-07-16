@@ -21,8 +21,6 @@ load_dotenv()
     https://www.mongodb.com/docs/languages/python/pymongo-driver/current/   
 """
 
-# wanting to implement: using claude rerank 
-
 class StorageClient: 
 
     def __init__(self, uri=os.getenv("MONGODB_URI")): 
@@ -121,7 +119,7 @@ class StorageClient:
 
     def delete_documents(self, item_id):
         result = self.collection.delete_many({"item_id": item_id})
-        return result.deleted_count  # Returns the count of deleted documents
+        return result.deleted_count  
 
 storage_client = StorageClient()
 
