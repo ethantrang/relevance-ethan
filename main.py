@@ -12,6 +12,10 @@ from fastapi.responses import StreamingResponse
 
 app = FastAPI()
 
+@app.get("/")
+def health_check():
+    return {"health check": "passed"}
+
 # data
 @app.post("/upload_documents")
 async def upload_documents(item_id: str = None, file: UploadFile = File(...)):
@@ -41,9 +45,10 @@ def retrieve_and_generate(query: str, item_id: str, retrieval_method: str, gener
 
 # evaluation
 @app.post("/create_testset")
-def create_testset():
+async def create_testset(test_size: int, file: UploadFile = File(...)):
     try:
-        testset_bytes = evaluation_client.create_testset()
+        data = await file.read()
+        testset_bytes = await evaluation_client.create_testset(data=data, test_size=test_size)
         return StreamingResponse(
             iter([testset_bytes]),
             media_type="text/csv",

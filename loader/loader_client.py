@@ -2,10 +2,8 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents.base import Document
 
-
 from typing import List
 from uuid import uuid4
-from datetime import datetime
 import os
 
 class LoaderClient:
@@ -31,6 +29,7 @@ class LoaderClient:
         except FileNotFoundError:
             print(f"File {file_path} does not exist.")
 
+    # used to resize chunks if they're too short
     def resize_docs(self, docs: List[Document]) -> List[Document]: 
         new_docs = [] 
         curr_page_content = ""

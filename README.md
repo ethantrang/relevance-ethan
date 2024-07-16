@@ -7,11 +7,13 @@ Task approach:
 - Developed two retrieval approaches: vector search and hybrid search (combination of vector and text index search)
 - Developed two generation frameworks: OpenAI gpt-3.5-turbo, Anthropic claude-3-sonnet 
 - Evaluated pipelines using Ragas for the following metrics: retrieval (context precision, context recall), generation (faithfulness, answer relevancy)
-- Production structure achieved by assuming a microservice-like/modularized organization and REST API deployment
+- Production structure achieved by assuming a microservice-like/modularized project organization + REST API deployment
 
 Tech stack:
 - Python: FastAPI, Uvicorn
 - Frameworks: LangChain, LiteLLM, Ragas (for evaluation)
-- AI Models: OpenAI GPT, Anthropic Claude (run AWS Bedrock)
+- AI Models: OpenAI GPT, Anthropic Claude (run from AWS Bedrock)
 - Database: MongoDB
+
+* Disclaimer: Ragas I've found is kind of buggy in production.
 

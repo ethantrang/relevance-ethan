@@ -21,7 +21,7 @@ load_dotenv()
     https://www.mongodb.com/docs/languages/python/pymongo-driver/current/   
 """
 
-# TODO: using claude rerank 
+# wanting to implement: using claude rerank 
 
 class StorageClient: 
 
@@ -34,12 +34,6 @@ class StorageClient:
         self.collection = self.mongodb_client[self.db_name][self.collection_name]
         self.embeddings = OpenAIEmbeddings()
         self.openai_client = OpenAI()
-
-    def create_index(self):
-        pass
-
-    def delete_index(self):
-        pass
 
     def store_documents(self, data: bytes, item_id: str):
 
